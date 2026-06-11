@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIReg Privacy Dashboard</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="logo">🛡️</span>
+      <div class="brand-text">
+        <h1>AIReg</h1>
+        <p>AI Usage Regulator</p>
+      </div>
+    </div>
+    <div class="firewall-switch-container">
+      <span id="firewall-status-label" class="status-label">Active</span>
+      <label class="switch">
+        <input type="checkbox" id="toggle-firewall" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+  </header>
+
+  <main class="app-content">
+    <!-- 1. Telemetry Grid -->
+    <section class="telemetry-grid">
+      <div class="stat-card budget-card">
+        <div class="stat-header">
+          <span class="stat-icon">📊</span>
+          <h3>Daily Token Quota</h3>
+        </div>
+        <div class="stat-value">
+          <span id="stat-tokens-used">0</span>
+          <span class="stat-limit">/ <span id="stat-tokens-limit">50k</span></span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="budget-progress" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <div class="stat-card redacted-card">
+        <div class="stat-header">
+          <span class="stat-icon">✂️</span>
+          <h3>Redacted Matches</h3>
+        </div>
+        <div class="stat-value" id="stat-redacted">0</div>
+        <p class="stat-sub">PII elements masked today</p>
+      </div>
+
+      <div class="stat-card blocked-card">
+        <div class="stat-header">
+          <span class="stat-icon">🚫</span>
+          <h3>Blocked Leaks</h3>
+        </div>
+        <div class="stat-value" id="stat-blocked">0</div>
+        <p class="stat-sub">Critical data transfers dropped</p>
+      </div>
+    </section>
+
+    <!-- 2. Navigation Tabs -->
+    <nav class="settings-tabs">
+      <button class="tab-btn active" data-tab="tab-logs">Live Logs</button>
+      <button class="tab-btn" data-tab="tab-domains">Domains</button>
+      <button class="tab-btn" data-tab="tab-keywords">Keywords</button>
+      <button class="tab-btn" data-tab="tab-config">Settings</button>
+    </nav>
+
+    <!-- 3. Tab Contents -->
+    <section class="tab-container">
+      
+      <!-- Tab: Live Logs -->
+      <div class="tab-content active" id="tab-logs">
+        <div class="section-header">
+          <h2>Activity Terminal</h2>
+          <button id="btn-clear-logs" class="btn-text">Clear Activity</button>
+        </div>
+        <div class="terminal-log-container">
+          <div id="log-terminal" class="terminal-log">
+            <div class="terminal-placeholder">Awaiting intercepted traffic streams...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Domains -->
+      <div class="tab-content" id="tab-domains">
+        <div class="section-header">
+          <h2>Domain Behaviors</h2>
+        </div>
+        <div class="domain-manager">
+          <div class="domain-add-row">
+            <input type="text" id="input-new-domain" placeholder="e.g. custom-ai.com">
+            <button id="btn-add-domain" class="btn-primary">Add Host</button>
+          </div>
+          <div class="rules-table-container">
+            <table class="rules-table">
+              <thead>
+                <tr>
+                  <th>Domain</th>
+                  <th>Regulation Policy</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="domain-rules-list">
+                <!-- Injected via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Keywords -->
+      <div class="tab-content" id="tab-keywords">
+        <div class="section-header">
+          <h2>Custom Regulator Keywords</h2>
+          <p class="section-desc">Add names, products, or tokens that must be redacted automatically.</p>
+        </div>
+        <div class="keyword-manager">
+          <div class="keyword-add-row">
+            <input type="text" id="input-new-keyword" placeholder="e.g. Project-Alpha">
+            <button id="btn-add-keyword" class="btn-primary">Add Word</button>
+          </div>
+          <div id="keywords-list" class="keywords-pill-box">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Config Settings -->
+      <div class="tab-content" id="tab-config">
+        <div class="section-header">
+          <h2>Global System Configurations</h2>
+        </div>
+        <div class="config-form">
+          <div class="config-group">
+            <div class="config-label-desc">
+              <label for="input-token-budget">Daily Token Budget Limit</label>
+              <p>Physical cap to prevent over-budget prompts.</p>
+            </div>
+            <input type="number" id="input-token-budget" value="50000" min="1000" step="5000">
+          </div>
+
+          <div class="config-group toggle-group">
+            <div class="config-label-desc">
+              <label>Autopilot Redaction Mode</label>
+              <p>Silently redact PII leaks without prompting for confirmation overlay.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="toggle-autopilot">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="config-actions">
+            <button id="btn-save-config" class="btn-primary">Apply Settings</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <span>AIReg Premium Engine v1.0.0</span>
+  </footer>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>
